@@ -12,13 +12,13 @@
         比如 MySQL项目可以配置 datasource.url   datasource.username  datasource.password
     
 
-    2.1 .新增项目  configRepository/save 
+    2.1 .新增项目   api/configRepository/save 
         
-    3.1  更新项目   configRepository/update   
+    3.1  更新项目   api/configRepository/update   
         
-    4.1  删除项目    configRepository/delete     
+    4.1  删除项目   api/configRepository/delete     
     
-    5.1  查询项目   configRepository/findAll
+    5.1  查询项目   api/configRepository/findAll
          可根据项目参数查询
          
     
@@ -29,13 +29,13 @@
        propertiesName 属性名
        propertiesValue 属性值
        
-    2.2 新增项目属性  configProperties/save    
+    2.2 新增项目属性  api/configProperties/save    
     
-    2.3 更新项目属性 configProperties/update
+    2.3 更新项目属性  api/configProperties/update
     
-    2.4 删除项目属性  configProperties/delete
+    2.4 删除项目属性  api/configProperties/delete
     
-    2.5 查询项目属性  configProperties/findAll
+    2.5 查询项目属性  api/configProperties/findAll
        可根据项目属性参数查询
     
 
