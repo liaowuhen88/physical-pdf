@@ -1,0 +1,26 @@
+域名：http://config.17doubao.com
+
+接口说明：
+  1.项目接口
+    1.1 项目参数说明
+       configKey  主键
+       application 项目应用名称
+       profile 项目应用模块
+       type  0表示基本配置比如 mysql,activeMQ    1 表示项目配置比如 客服，理赔
+       
+    1.2  type== 0的项目可配置具体项目属性 
+        比如 MySQL项目可以配置 datasource.url   datasource.username  datasource.password
+    
+
+    2.1 .新增项目  configRepository/save 
+        
+    3.1  更新项目   configRepository/update   
+        
+    4.1  删除项目    configRepository/delete     
+    
+    5.1  查询项目   configRepository/findAll
+         可根据项目参数查询
+         
+
+
+
