@@ -5,14 +5,18 @@ import com.bean.PhysicalExamination;
 import com.bean.PhysicalExaminationIteam;
 import com.bean.PhysicalExaminationReport;
 import com.bean.User;
+import com.requestBean.FileUpload;
+import com.service.DealFileService;
 import com.service.DelaDateServiceCiMing;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.PostConstruct;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -26,7 +30,8 @@ import java.util.Set;
 public class DelaDateServiceCiMingImpl implements DelaDateServiceCiMing {
     private static Set<String> cmSets = new HashSet();
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
-
+    @Autowired
+    private DealFileService dealFileService;
     @PostConstruct
     void init() {
         cmSets.add("一般检查");
@@ -43,6 +48,9 @@ public class DelaDateServiceCiMingImpl implements DelaDateServiceCiMing {
         cmSets.add("肿瘤检测");
         cmSets.add("尿常规");
         cmSets.add("心电图");
+        cmSets.add("胸部摄片");
+        cmSets.add("颈椎片");
+
     }
 
     @Override
@@ -75,6 +83,12 @@ public class DelaDateServiceCiMingImpl implements DelaDateServiceCiMing {
             }
         }
         return pr;
+    }
+
+    @Override
+    public PhysicalExaminationReport dealData(InputStream inputStream, FileUpload fileUpload) throws Exception {
+        List<List<List<String>>> list = dealFileService.getWholeCiMingHtmlContext(inputStream, fileUpload);
+        return dealData(list);
     }
 
     @Override

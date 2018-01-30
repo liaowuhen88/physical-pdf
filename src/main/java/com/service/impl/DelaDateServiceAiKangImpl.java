@@ -5,14 +5,18 @@ import com.bean.PhysicalExamination;
 import com.bean.PhysicalExaminationIteam;
 import com.bean.PhysicalExaminationReport;
 import com.bean.User;
+import com.requestBean.FileUpload;
+import com.service.DealFileService;
 import com.service.DelaDateServiceAiKang;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.PostConstruct;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -25,6 +29,8 @@ import java.util.Set;
 public class DelaDateServiceAiKangImpl implements DelaDateServiceAiKang {
     private static Set<String> cmSets = new HashSet();
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
+    @Autowired
+    private DealFileService dealFileService;
 
     @PostConstruct
     void init() {
@@ -41,13 +47,24 @@ public class DelaDateServiceAiKangImpl implements DelaDateServiceAiKang {
     }
 
     @Override
-    public PhysicalExaminationReport dealData(List<List<String>> list) {
+    public PhysicalExaminationReport dealData(List<List<String>> list, FileUpload fileUpload) {
         PhysicalExaminationReport per = new PhysicalExaminationReport();
         List<PhysicalExamination> pes = dealPhysicalExamination(list);
+        List<String> metaAnalysis = dealMetaAnalysis(list);
+
         User user = dealUserMessage(list);
+        user.setIdCard(fileUpload.getIdCard());
         per.setPhysicalExamination(pes);
         per.setUser(user);
+        per.setMetaAnalysis(metaAnalysis);
+
         return per;
+    }
+
+    @Override
+    public PhysicalExaminationReport dealData(InputStream inputStream, FileUpload fileUpload) throws Exception {
+        List<List<String>> li = dealFileService.getWholeAiKangPdfContext(inputStream);
+        return dealData(li, fileUpload);
     }
 
     @Override
@@ -56,7 +73,18 @@ public class DelaDateServiceAiKangImpl implements DelaDateServiceAiKang {
     }
 
     @Override
-    public boolean isMetaAnalysis(List<List<String>> table) {
+    public boolean isMetaAnalysis(List<String> table) {
+        if (!CollectionUtils.isEmpty(table)) {
+            if (table.size() == 2) {
+                String str = table.get(0);
+                if (!StringUtils.isEmpty(str)) {
+                    //logger.info("str {}  --- {}",str,str.startsWith("★"));
+                    if (str.startsWith("【")) {
+                        return true;
+                    }
+                }
+            }
+        }
         return false;
     }
 
@@ -67,11 +95,21 @@ public class DelaDateServiceAiKangImpl implements DelaDateServiceAiKang {
 
     @Override
     public User dealUserMessage(List<List<String>> table) {
-        return null;
+        User user = new User();
+        return user;
     }
 
     @Override
     public List<String> dealMetaAnalysis(List<List<String>> table) {
+        if (!CollectionUtils.isEmpty(table)) {
+            List<String> li = new ArrayList<>();
+            for (List<String> tr : table) {
+                if (isMetaAnalysis(tr)) {
+                    li.add(tr.get(0) + tr.get(1));
+                }
+            }
+            return li;
+        }
         return null;
     }
 

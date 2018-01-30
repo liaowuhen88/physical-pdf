@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by liaowuhen on 2018/1/19.
  */
-public interface DelaDateServiceMeiNian {
+public interface DelaDateServiceMeiNian extends DealDateService {
     PhysicalExaminationReport dealData(List<List<String>> list);
 
     /**
@@ -26,7 +26,7 @@ public interface DelaDateServiceMeiNian {
      * @param table
      * @return
      */
-    boolean isMetaAnalysis(List<List<String>> table);
+    boolean isMetaAnalysis(List<String> table);
 
     /**
      * 是否是用户信息

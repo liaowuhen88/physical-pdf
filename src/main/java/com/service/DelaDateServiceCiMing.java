@@ -9,9 +9,8 @@ import java.util.List;
 /**
  * Created by liaowuhen on 2018/1/19.
  */
-public interface DelaDateServiceCiMing {
+public interface DelaDateServiceCiMing extends DealDateService {
     PhysicalExaminationReport dealData(List<List<List<String>>> list);
-
     /**
      * 是否是体检项
      *

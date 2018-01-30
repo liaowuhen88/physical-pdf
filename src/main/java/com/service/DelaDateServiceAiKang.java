@@ -3,6 +3,7 @@ package com.service;
 import com.bean.PhysicalExamination;
 import com.bean.PhysicalExaminationReport;
 import com.bean.User;
+import com.requestBean.FileUpload;
 
 import java.util.List;
 
@@ -11,8 +12,8 @@ import java.util.List;
  * <p/>
  * 爱康
  */
-public interface DelaDateServiceAiKang {
-    PhysicalExaminationReport dealData(List<List<String>> list);
+public interface DelaDateServiceAiKang extends DealDateService {
+    PhysicalExaminationReport dealData(List<List<String>> list, FileUpload fileUpload);
 
     /**
      * 是否是体检项
@@ -28,7 +29,7 @@ public interface DelaDateServiceAiKang {
      * @param table
      * @return
      */
-    boolean isMetaAnalysis(List<List<String>> table);
+    boolean isMetaAnalysis(List<String> table);
 
     /**
      * 是否是用户信息

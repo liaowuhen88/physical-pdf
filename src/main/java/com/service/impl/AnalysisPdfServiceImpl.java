@@ -101,7 +101,7 @@ public class AnalysisPdfServiceImpl implements AnalysisPdfService {
                         resu[1] = boundingRectange.y + "";
                         resu[2] = i + "";
                         resu[3] = text;
-                        logger.info("x:" + resu[0] + "---y:" + resu[1] + "---conetnt:" + text + "---page:" + i);
+                        //logger.info("x:" + resu[0] + "---y:" + resu[1] + "---conetnt:" + text + "---page:" + i);
                         arrays.add(resu);
                     }
 
@@ -112,12 +112,12 @@ public class AnalysisPdfServiceImpl implements AnalysisPdfService {
 
                     @Override
                     public void endTextBlock() {
-                        logger.info("endTextBlock");
+                        //logger.info("endTextBlock");
                     }
 
                     @Override
                     public void beginTextBlock() {
-                        logger.info("beginTextBlock");
+                        //logger.info("beginTextBlock");
                     }
 
 
@@ -126,6 +126,8 @@ public class AnalysisPdfServiceImpl implements AnalysisPdfService {
             } while (i <= pageNum && wholeContextFlag);
         } catch (IOException e) {
             logger.error("error", e);
+        } finally {
+            pdfReader.close();
         }
         return changeSeq(clipProcess(arrays));
 

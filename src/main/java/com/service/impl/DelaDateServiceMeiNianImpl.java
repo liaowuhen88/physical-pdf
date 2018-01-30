@@ -5,13 +5,17 @@ import com.bean.PhysicalExamination;
 import com.bean.PhysicalExaminationIteam;
 import com.bean.PhysicalExaminationReport;
 import com.bean.User;
+import com.requestBean.FileUpload;
+import com.service.DealFileService;
 import com.service.DelaDateServiceMeiNian;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,15 +25,28 @@ import java.util.List;
 @Service
 public class DelaDateServiceMeiNianImpl implements DelaDateServiceMeiNian {
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
+    @Autowired
+    private DealFileService dealFileService;
 
     @Override
     public PhysicalExaminationReport dealData(List<List<String>> list) {
         PhysicalExaminationReport per = new PhysicalExaminationReport();
+
         List<PhysicalExamination> pes = dealPhysicalExamination(list);
+        List<String> metaAnalysis = dealMetaAnalysis(list);
         User user = dealUserMessage(list);
+
+
         per.setPhysicalExamination(pes);
         per.setUser(user);
+        per.setMetaAnalysis(metaAnalysis);
         return per;
+    }
+
+    @Override
+    public PhysicalExaminationReport dealData(InputStream inputStream, FileUpload fileUpload) throws Exception {
+        List<List<String>> li = dealFileService.getWholeMeiNianPdfContext(inputStream);
+        return dealData(li);
     }
 
     @Override
@@ -38,7 +55,18 @@ public class DelaDateServiceMeiNianImpl implements DelaDateServiceMeiNian {
     }
 
     @Override
-    public boolean isMetaAnalysis(List<List<String>> table) {
+    public boolean isMetaAnalysis(List<String> table) {
+        if (!CollectionUtils.isEmpty(table)) {
+            if (table.size() == 1) {
+                String str = table.get(0);
+                if (!StringUtils.isEmpty(str)) {
+                    //logger.info("str {}  --- {}",str,str.startsWith("★"));
+                    if (str.startsWith("★")) {
+                        return true;
+                    }
+                }
+            }
+        }
         return false;
     }
 
@@ -50,16 +78,27 @@ public class DelaDateServiceMeiNianImpl implements DelaDateServiceMeiNian {
     @Override
     public User dealUserMessage(List<List<String>> list) {
         User user = new User();
-        if (!CollectionUtils.isEmpty(list)) {
-            user.setIdCard(list.get(2).get(1));
-            user.setAge(list.get(3).get(1));
-            user.setName(list.get(0).get(0));
-        }
+        /*if (!CollectionUtils.isEmpty(list)) {
+            if(isUserMessage(list)){
+                user.setIdCard(list.get(2).get(1));
+                user.setAge(list.get(3).get(1));
+                user.setName(list.get(0).get(0));
+            }
+        }*/
         return user;
     }
 
     @Override
     public List<String> dealMetaAnalysis(List<List<String>> table) {
+        if (!CollectionUtils.isEmpty(table)) {
+            List<String> li = new ArrayList<>();
+            for (List<String> tr : table) {
+                if (isMetaAnalysis(tr)) {
+                    li.add(tr.get(0));
+                }
+            }
+            return li;
+        }
         return null;
     }
 
@@ -95,7 +134,7 @@ public class DelaDateServiceMeiNianImpl implements DelaDateServiceMeiNian {
                         }
                     }
                 }
-                logger.info(JSON.toJSONString(li));
+                //logger.info(JSON.toJSONString(li));
             }
         }
 

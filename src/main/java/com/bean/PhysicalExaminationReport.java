@@ -14,6 +14,8 @@ public class PhysicalExaminationReport {
 
     private User user;
 
+    private String md5;
+
     private List<PhysicalExamination> physicalExamination = new ArrayList<>();
 
     public List<String> getMetaAnalysis() {
@@ -38,5 +40,13 @@ public class PhysicalExaminationReport {
 
     public void setPhysicalExamination(List<PhysicalExamination> physicalExamination) {
         this.physicalExamination = physicalExamination;
+    }
+
+    public String getMd5() {
+        return md5;
+    }
+
+    public void setMd5(String md5) {
+        this.md5 = md5;
     }
 }
