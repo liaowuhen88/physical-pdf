@@ -205,6 +205,19 @@ public class DelaDateServiceAiKangImpl implements DelaDateServiceAiKang {
             if (li.size() < 2) {
                 return false;
             }
+
+            if (li.size() > 1) {
+                if (li.size() > 5) {
+                    return false;
+                }
+                if (StringUtils.isEmpty(li.get(0))) {
+                    return false;
+                } else {
+                    if (li.get(0).contains("爱康国宾") || li.get(0).contains("初步意见")) {
+                        return false;
+                    }
+                }
+            }
         }
         return true;
     }

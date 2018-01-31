@@ -118,6 +118,17 @@ public class DemoApplicationTests {
     }
 
     @Test
+    public void getWholeAiKangPdfContextInputStream() throws Exception {
+        String downUrl = "http://bj-bdy-private.oss-cn-beijing.aliyuncs.com/online%2Fzip%2F2016-09-13%2FREPORT_CASE_ID_2065.pdf?OSSAccessKeyId=obTuyP8GflR8U3nO&Expires=1517318865&Signature=XdybgiIReFjealjGHGIvf1flqPg%3D";
+        InputStream inputStream = HttpClientUtils.downByUrl(downUrl);
+        List<List<String>> tables = dealFileService.getWholeAiKangPdfContext(inputStream);
+        FileUpload fileUpload = new FileUpload();
+        PhysicalExaminationReport pr = delaDateServiceAiKang.dealData(tables, fileUpload);
+
+        logger.info(JSON.toJSONString(pr));
+    }
+
+    @Test
     public void downUrl() throws Exception {
         InputStream inputStream = HttpClientUtils.downByUrl("http://bj-bdy-private.oss-cn-beijing.aliyuncs.com/dev%2FREPORT_CASE_ID_12290_ORDER_ID_18252_%E6%9D%8E%E5%BB%BA%E5%85%B4.pdf?OSSAccessKeyId=obTuyP8GflR8U3nO&Expires=1516951801&Signature=9AHbumoy%2FDVngHFaVaLGx9bvIaY%3D");
 
