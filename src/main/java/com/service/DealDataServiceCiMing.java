@@ -9,16 +9,15 @@ import java.util.List;
 /**
  * Created by liaowuhen on 2018/1/19.
  */
-public interface DelaDateServiceMeiNian extends DealDateService {
-    PhysicalExaminationReport dealData(List<List<String>> list);
-
+public interface DealDataServiceCiMing extends DealDataService {
+    PhysicalExaminationReport dealData(List<List<List<String>>> list);
     /**
      * 是否是体检项
      *
      * @param table
      * @return
      */
-    boolean isPhysicalExamination(List<String> table);
+    boolean isPhysicalExamination(List<List<String>> table);
 
     /**
      * 是否是汇总分析
@@ -26,7 +25,7 @@ public interface DelaDateServiceMeiNian extends DealDateService {
      * @param table
      * @return
      */
-    boolean isMetaAnalysis(List<String> table);
+    boolean isMetaAnalysis(List<List<String>> table);
 
     /**
      * 是否是用户信息
@@ -55,8 +54,8 @@ public interface DelaDateServiceMeiNian extends DealDateService {
     /**
      * 处理体检项
      *
-     * @param
+     * @param table
      * @return
      */
-    List<PhysicalExamination> dealPhysicalExamination(List<List<String>> list);
+    PhysicalExamination dealPhysicalExamination(List<List<String>> table);
 }

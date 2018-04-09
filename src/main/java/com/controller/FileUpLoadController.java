@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.bean.PhysicalExaminationReport;
 import com.bean.Response;
 import com.requestBean.FileUpload;
-import com.service.DealDateService;
+import com.service.DealDataService;
 import com.service.DealFileService;
 import com.utils.HttpClientUtils;
 import com.utils.SpringContextUtil;
@@ -69,9 +69,9 @@ public class FileUpLoadController {
             }
             int size = inputStream.available();
             logger.info("inputStream.available(): {} ", size);
-            DealDateService dealDateService = SpringContextUtil.getBean("delaDateService" + fileUpload.getType() + "Impl");
-            if (null != dealDateService) {
-                pr = dealDateService.dealData(inputStream, fileUpload);
+            DealDataService dealDataService = SpringContextUtil.getBean("dealDataService" + fileUpload.getType() + "Impl");
+            if (null != dealDataService) {
+                pr = dealDataService.dealData(inputStream, fileUpload);
             } else {
                 throw new RuntimeException("other type [" + fileUpload.getType() + "]");
             }

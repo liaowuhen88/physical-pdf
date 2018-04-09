@@ -3,17 +3,14 @@ package com.service;
 import com.bean.PhysicalExamination;
 import com.bean.PhysicalExaminationReport;
 import com.bean.User;
-import com.requestBean.FileUpload;
 
 import java.util.List;
 
 /**
  * Created by liaowuhen on 2018/1/19.
- * <p/>
- * 爱康
  */
-public interface DelaDateServiceAiKang extends DealDateService {
-    PhysicalExaminationReport dealData(List<List<String>> list, FileUpload fileUpload);
+public interface DealDataServiceMeiNian extends DealDataService {
+    PhysicalExaminationReport dealData(List<List<String>> list);
 
     /**
      * 是否是体检项
@@ -21,7 +18,7 @@ public interface DelaDateServiceAiKang extends DealDateService {
      * @param table
      * @return
      */
-    boolean isPhysicalExamination(List<List<String>> table);
+    boolean isPhysicalExamination(List<String> table);
 
     /**
      * 是否是汇总分析
@@ -58,8 +55,8 @@ public interface DelaDateServiceAiKang extends DealDateService {
     /**
      * 处理体检项
      *
-     * @param table
+     * @param
      * @return
      */
-    List<PhysicalExamination> dealPhysicalExamination(List<List<String>> table);
+    List<PhysicalExamination> dealPhysicalExamination(List<List<String>> list);
 }

@@ -31,13 +31,13 @@ public class DemoApplicationTests {
     private AnalysisPdfService analysisPdfService;
 
     @Autowired
-    private DelaDateServiceCiMing delaDateService;
+    private DealDataServiceCiMing delaDateService;
 
     @Autowired
-    private DelaDateServiceMeiNian delaDateServiceMeiNian;
+    private DealDataServiceMeiNian dealDataServiceMeiNian;
 
     @Autowired
-    private DelaDateServiceAiKang delaDateServiceAiKang;
+    private DealDataServiceAiKang dealDataServiceAiKang;
 
     @Autowired
     private DealFileService dealFileService;
@@ -78,13 +78,13 @@ public class DemoApplicationTests {
         String name1 = "MeiNian";
         String name2 = "MeiNian";
 
-        DealDateService dealDateService = SpringContextUtil.getBean("delaDateService" + name + "Impl");
+        DealDataService dealDataService = SpringContextUtil.getBean("delaDateService" + name + "Impl");
 
-        dealDateService = SpringContextUtil.getBean("delaDateService" + name1 + "Impl");
+        dealDataService = SpringContextUtil.getBean("delaDateService" + name1 + "Impl");
 
-        dealDateService = SpringContextUtil.getBean("delaDateService" + name2 + "Impl");
+        dealDataService = SpringContextUtil.getBean("delaDateService" + name2 + "Impl");
 
-        logger.info(dealDateService.toString());
+        logger.info(dealDataService.toString());
     }
 
 
@@ -92,7 +92,7 @@ public class DemoApplicationTests {
     public void getWholeMeiNianContext() throws Exception {
         String fileName = "C:\\Users\\liaowuhen\\Desktop\\7718003213_张婷婷.pdf";
         List<List<String>> tables = dealFileService.getWholeMeiNianPdfContext(fileName);
-        PhysicalExaminationReport pr = delaDateServiceMeiNian.dealData(tables);
+        PhysicalExaminationReport pr = dealDataServiceMeiNian.dealData(tables);
         logger.info(JSON.toJSONString(pr));
     }
 
@@ -112,7 +112,7 @@ public class DemoApplicationTests {
         List<List<String>> tables = dealFileService.getWholeAiKangPdfContext(fileName);
         String md5 = dealFileService.getMd5ByFile(fileName);
         FileUpload fileUpload = new FileUpload();
-        PhysicalExaminationReport pr = delaDateServiceAiKang.dealData(tables, fileUpload);
+        PhysicalExaminationReport pr = dealDataServiceAiKang.dealData(tables, fileUpload);
 
         logger.info(JSON.toJSONString(pr));
     }
@@ -123,7 +123,7 @@ public class DemoApplicationTests {
         InputStream inputStream = HttpClientUtils.downByUrl(downUrl);
         List<List<String>> tables = dealFileService.getWholeAiKangPdfContext(inputStream);
         FileUpload fileUpload = new FileUpload();
-        PhysicalExaminationReport pr = delaDateServiceAiKang.dealData(tables, fileUpload);
+        PhysicalExaminationReport pr = dealDataServiceAiKang.dealData(tables, fileUpload);
 
         logger.info(JSON.toJSONString(pr));
     }

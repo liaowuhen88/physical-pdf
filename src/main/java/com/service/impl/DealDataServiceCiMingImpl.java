@@ -6,8 +6,8 @@ import com.bean.PhysicalExaminationIteam;
 import com.bean.PhysicalExaminationReport;
 import com.bean.User;
 import com.requestBean.FileUpload;
+import com.service.DealDataServiceCiMing;
 import com.service.DealFileService;
-import com.service.DelaDateServiceCiMing;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ import java.util.Set;
  */
 
 @Service
-public class DelaDateServiceCiMingImpl implements DelaDateServiceCiMing {
+public class DealDataServiceCiMingImpl implements DealDataServiceCiMing {
     private static Set<String> cmSets = new HashSet();
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired

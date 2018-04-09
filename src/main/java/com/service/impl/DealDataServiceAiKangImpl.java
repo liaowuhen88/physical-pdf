@@ -6,8 +6,8 @@ import com.bean.PhysicalExaminationIteam;
 import com.bean.PhysicalExaminationReport;
 import com.bean.User;
 import com.requestBean.FileUpload;
+import com.service.DealDataServiceAiKang;
 import com.service.DealFileService;
-import com.service.DelaDateServiceAiKang;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ import java.util.Set;
  * Created by liaowuhen on 2018/1/23.
  */
 @Service
-public class DelaDateServiceAiKangImpl implements DelaDateServiceAiKang {
+public class DealDataServiceAiKangImpl implements DealDataServiceAiKang {
     private static Set<String> cmSets = new HashSet();
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
